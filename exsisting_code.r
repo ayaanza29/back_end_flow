@@ -57,4 +57,4 @@ p <- ggplot(umapStuff_df, aes(x = X1, y = X2, color = "red")) +
         #scale_color_gradient(low = "black", high = "blue")
 
 p
-ggsave("temporary_images/actual_plot.jpeg")
+ggsave("temporary_images/actual_plot.png")
