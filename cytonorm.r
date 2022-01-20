@@ -1,5 +1,5 @@
 library(devtools)
-#install_github('saeyslab/CytoNorm')
+install_github('saeyslab/CytoNorm')
 
 
 # dir <- system.file("extdata", package = "CytoNorm")
