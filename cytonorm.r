@@ -31,7 +31,7 @@ install_github('saeyslab/CytoNorm')
 
 
 
-fsom <- prepareFlowSOM(train_data$Path,
+fsom <- FlowSOM(train_data$Path,
                        channels,
                        nCells = 6000,
                        FlowSOM.params = list(xdim = 5,
