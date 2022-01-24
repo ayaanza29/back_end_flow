@@ -24,3 +24,7 @@ ff <- flowCore::transform(ff,
 PeacoQC_res <- PeacoQC(ff, channels,
                         determine_good_cells="all",
                         save_fcs=TRUE)
+
+
+
+
