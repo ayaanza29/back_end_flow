@@ -1,5 +1,5 @@
 
-
+library(flowCore)
 # General pipeline for preprocessing and quality control with PeacoQC
 fcsFile <- "C:/Users/Zuhayr/Downloads/776 F SP.fcs"
 # Read in raw fcs file
@@ -24,4 +24,3 @@ ff <- flowCore::transform(ff,
 PeacoQC_res <- PeacoQC(ff, channels,
                         determine_good_cells="all",
                         save_fcs=TRUE)
-                        
