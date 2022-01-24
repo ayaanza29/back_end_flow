@@ -1,5 +1,5 @@
-library(devtools)
-install_github('saeyslab/CytoNorm')
+#library(devtools)
+#install_github('saeyslab/CytoNorm')
 
 
 # dir <- system.file("extdata", package = "CytoNorm")
@@ -31,26 +31,35 @@ install_github('saeyslab/CytoNorm')
 
 
 
-fsom <- FlowSOM(train_data$Path,
-                       channels,
-                       nCells = 6000,
-                       FlowSOM.params = list(xdim = 5,
-                                             ydim = 5,
-                                             nClus = 10,
-                                             scale = FALSE),
-                       transformList = transformList,
-                       seed = 1)
+# fsom <- FlowSOM(train_data$Path,
+#                        channels,
+#                        nCells = 6000,
+#                        FlowSOM.params = list(xdim = 5,
+#                                              ydim = 5,
+#                                              nClus = 10,
+#                                              scale = FALSE),
+#                        transformList = transformList,
+#                        seed = 1)
                        
-cvs <- testCV(fsom,
-              cluster_values = c(5, 10, 15)) 
+# cvs <- testCV(fsom,
+#               cluster_values = c(5, 10, 15)) 
               
-cvs$pctgs$`10`
+# cvs$pctgs$`10`
 
 
 
 
 
-
+CytoNorm.normalize(model = model,
+                   files = validation_data$Path,
+                   labels = validation_data$Batch,
+                   transformList = transformList,
+                   transformList.reverse = transformList.reverse,
+                   normMethod.normalize = QuantileNorm.normalize,
+                   outputDir = "Normalized",
+                   prefix = "Norm_",
+                   clean = TRUE,
+                   verbose = TRUE)
 
 
 
