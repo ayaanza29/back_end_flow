@@ -1,4 +1,15 @@
 library(methods)
+library(umap)
+library(dplyr)
+#library(Seurat)
+library(ggplot2)
+library(patchwork)
+library(flowCore)
+#library(flowViz)
+library(magrittr)
+library(ggnewscale)
+library(scales)
+library(PeacoQC)
 
 source("final_format/autonomous_gating.r")
 source("final_format/QC.r")
@@ -9,18 +20,28 @@ source("final_format/clustering.r")
 source("final_format/data_visualizations.r")
 
 
-movieList <- movies(name = "Iron Man", 
-                    leadActor = "Robert downey Jr", rating = 7)
+
+# path_to_fcs <- readline(prompt = "Enter path to fcs file: ")
+# path_to_channels <- readline(prompt = "Enter channels vector: ")
+# path_to_channels
+# while (file_ext(path_to_fcs) != "fcs" || all(path_to_channels != floor(path_to_channels))) {
+#     path_to_fcs <- readline(prompt = "Try again, Please enter a valid path to the fcs file: ")
+#     #path_to_channels <- readline(prompt = "Enter channels vector: ")
+# }
+# # QC_instance <- quality_control(file = path_to_fcs, channels = path_to_channels)
+# # QC_instance$run_QC()
 
 
-movieList$rating
-  
-# increment and then print the rating
-movieList$increment_rating()
-movieList$rating
-  
-# decrement and print the rating
-movieList$decrement_rating()
-movieList$rating
+
+QC_instance <- quality_control(file = "C:/Users/Zuhayr/Downloads/776 F SP.fcs", channels = c(1, 3, 5:14, 18, 21))
+
+#QC_instance$format_fcs()
+QC_instance$run_QC()
+
+
+
+
+
+
 
 

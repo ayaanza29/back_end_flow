@@ -1,5 +1,5 @@
-
 library(flowCore)
+
 # General pipeline for preprocessing and quality control with PeacoQC
 fcsFile <- "C:/Users/Zuhayr/Downloads/776 F SP.fcs"
 # Read in raw fcs file
