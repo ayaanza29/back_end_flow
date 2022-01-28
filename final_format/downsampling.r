@@ -12,6 +12,9 @@ library(ggnewscale)
 library(scales)
 library(PeacoQC)
 
+
+
+
 # Not run
 ## Load two-parameters sample data included in package
 #data_file_path = paste(installed.packages()["spade","LibPath"],"spade","extdata","SimulatedRawData.fcs",sep=.Platform$file.sep)
@@ -21,7 +24,7 @@ output_dir <- tempdir()
 #
 ## Compute and annotate FCS file with density
 density_file_path <- paste(output_dir,.Platform$file.sep,basename(data_file_path),".density.fcs",sep="")
-SPADE.addDensityToFCS(data_file_path, density_file_path, cols=c("FSC-A","SSC-A"))
+SPADE.addDensityToFCS(data_file_path, density_file_path, cols=c("FSC-A","SSC-A")) #Check which two columns should be used
 
 ## Downsample FCS file based on density
 downsample_file_path <- paste(output_dir,.Platform$file.sep,basename(data_file_path),".density.fcs",sep="")
@@ -41,8 +44,35 @@ SPADE.FCSToTree(downsample_file_path, cells_file_path, graph_file_path, clust_fi
 
 
 
+downsample <- setRefClass("downsample", fields = list(file = "character", 
+                       channels = "vector"), methods = list(
+                       spade_downsample = function()
+                       {
+                            # Not run
+                            ## Load two-parameters sample data included in package
+                            #data_file_path = paste(installed.packages()["spade","LibPath"],"spade","extdata","SimulatedRawData.fcs",sep=.Platform$file.sep)
+                            data_file_path = "C:/Users/Zuhayr/Downloads/776 F SP.fcs"
 
+                            output_dir <- tempdir()
+                            #
+                            ## Compute and annotate FCS file with density
+                            density_file_path <- paste(output_dir,.Platform$file.sep,basename(data_file_path),".density.fcs",sep="")
+                            SPADE.addDensityToFCS(data_file_path, density_file_path, cols=c("FSC-A","SSC-A")) #Check which two columns should be used
 
+                            ## Downsample FCS file based on density
+                            downsample_file_path <- paste(output_dir,.Platform$file.sep,basename(data_file_path),".density.fcs",sep="")
+                            SPADE.downsampleFCS(density_file_path, downsample_file_path)
+                       },    
+                       spade_build_tree = function()
+                       {
+                            cells_file_path <- paste(output_dir,"clusters.fcs",sep="")
+                            clust_file_path <- paste(output_dir,"clusters.table",sep="")
+                            graph_file_path <- paste(output_dir,"mst.gml",sep="")
+                            SPADE.FCSToTree(downsample_file_path, cells_file_path, graph_file_path, clust_file_path, cols=c("marker1","marker2"))
+                            #SPADE.FCSToTree(downsample_file_path, cells_file_path, graph_file_path, clust_file_path, cols=c("marker1","marker2"), k = 200, arcsinh_cofactor=NULL, transforms=flowCore::arcsinhTransform(a=0, b=0.2), desired_samples = 50000, comp=TRUE)
+
+                       }
+                     ))
 
 
 
