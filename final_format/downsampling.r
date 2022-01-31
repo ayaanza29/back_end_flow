@@ -41,10 +41,10 @@ downsample <- setRefClass("downsample", fields = list(data_file_path = "characte
                             cells_file_path <- paste(output_dir,"clusters.fcs",sep="")
                             clust_file_path <- paste(output_dir,"clusters.table",sep="")
                             graph_file_path <- paste(output_dir,"mst.gml",sep="")
-                            print(cells_file_path)
+                            print(graph_file_path)
                             SPADE.FCSToTree(data_file_path, cells_file_path, graph_file_path, clust_file_path, cols=NULL) #cols = NULL selects all channels
+                            #write_graph(graph_file_path, "C:/Users/Zuhayr/Documents/GitHub/r_background_app/temporary_images/stuff.png", format = "gml")
                             #SPADE.FCSToTree(downsample_file_path, cells_file_path, graph_file_path, clust_file_path, cols=c("marker1","marker2"), k = 200, arcsinh_cofactor=NULL, transforms=flowCore::arcsinhTransform(a=0, b=0.2), desired_samples = 50000, comp=TRUE)
-
                        }
                      ))
 
