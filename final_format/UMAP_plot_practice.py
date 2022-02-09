@@ -36,9 +36,6 @@
 
 #################     Above works I think but takes forever
 
-from tokenize import String
-from bokeh.plotting import *
-from bokeh.models import *
 
 # output_file("toolbar.html")
 
@@ -93,6 +90,9 @@ from bokeh.models import *
 
 
 
+from tokenize import String
+from bokeh.plotting import *
+from bokeh.models import *
 from random import random
 
 from bokeh.layouts import row
@@ -105,6 +105,11 @@ import holoviews
 from scipy import stats
 import numpy as np
 import datetime
+import pandas as pd
+import datashader as ds
+import datashader.transfer_functions as tf
+from collections import OrderedDict as odict
+
 
 output_file("callback.html")
 
