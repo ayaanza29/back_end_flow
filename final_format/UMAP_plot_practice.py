@@ -96,8 +96,8 @@ from bokeh.models import *
 from random import random
 
 from bokeh.layouts import row
-from bokeh.models import ColumnDataSource, CustomJS, Button
-from bokeh.plotting import figure, output_file, show
+#from bokeh.models import ColumnDataSource, CustomJS, Button
+#from bokeh.plotting import figure, output_file, show
 import FlowCal
 import matplotlib.pyplot as plt
 import holoviews
@@ -188,7 +188,7 @@ for i in range(len(x1)):
 
 
 s1.data["color column"] = new
-p1 = figure(width=400, height=400, tools="lasso_select, box_select, poly_select, pan, wheel_zoom, box_zoom, reset", title="Select Here")
+p1 = figure(width=400, height=400, tools="lasso_select, poly_select, pan, wheel_zoom, box_zoom, reset", title="Select Here")
 p1.xaxis.axis_label = 'FSC-A'
 p1.yaxis.axis_label = 'FSC-H'
 p1.circle('x1', 'y1', source=s1, alpha=0.6, color = "color column")
@@ -197,14 +197,14 @@ p1.circle('x1', 'y1', source=s1, alpha=0.6, color = "color column")
 print(datetime.datetime.now() - begin_time)
 
 s2 = ColumnDataSource(data=dict(x2=x2, y2=[]))
-p2 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, box_select, poly_select", title="Watch Here")
+p2 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, poly_select", title="Watch Here")
 p2.xaxis.axis_label = 'FSC-A'
 p2.yaxis.axis_label = 'FSC-W'
 p2.circle('x2', 'y2', source=s2, alpha=0.6)
 
 
 s3 = ColumnDataSource(data=dict(x3=[], y3=y3))
-p3 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, box_select, poly_select", title="Watch Here")
+p3 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, poly_select", title="Watch Here")
 p3.xaxis.axis_label = 'FSC-H'
 p3.yaxis.axis_label = 'FSC-W'
 p3.circle('x3', 'y3', source=s3, alpha=0.6)
@@ -212,7 +212,7 @@ p3.circle('x3', 'y3', source=s3, alpha=0.6)
 
 
 s3_4 = ColumnDataSource(data=dict(x3_4=[], y3_4=y3_4))
-p3_4 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, box_select, poly_select", title="Watch Here")
+p3_4 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, poly_select", title="Watch Here")
 #s3_4.selected.indicies 
 p3_4.xaxis.axis_label = 'SSC-A'
 p3_4.yaxis.axis_label = 'FSC-W'
@@ -220,20 +220,20 @@ p3_4.circle('x3_4', 'y3_4', source=s3_4, alpha=0.6)
 
 
 s4 = ColumnDataSource(data=dict(x4=[], y4=y4))
-p4 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, box_select, poly_select", title="Watch Here")
+p4 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, poly_select", title="Watch Here")
 p4.xaxis.axis_label = 'SSC-A'
 p4.yaxis.axis_label = 'SSC-H'
 p4.circle('x4', 'y4', source=s4, alpha=0.6)
 
 s5 = ColumnDataSource(data=dict(x5=x5, y5=[]))
-p5 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, box_select, poly_select", title="Watch Here")
+p5 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, poly_select", title="Watch Here")
 p5.xaxis.axis_label = 'SSC-A'
 p5.yaxis.axis_label = 'SSC-W'
 p5.circle('x5', 'y5', source=s5, alpha=0.6)
 
 
 s6 = ColumnDataSource(data=dict(x6=[], y6=y6))
-p6 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, box_select, poly_select", title="Watch Here")
+p6 = figure(width=400, height=400, tools="pan, wheel_zoom,lasso_select, poly_select", title="Watch Here")
 p6.xaxis.axis_label = 'SSC-H'
 p6.yaxis.axis_label = 'SSC-W'
 p6.circle('x6', 'y6', source=s6, alpha=0.6)

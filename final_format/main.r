@@ -40,9 +40,9 @@ QC_instance$run_QC()
 
 
 
-downsampling_instance <- downsampling(file = "C:/Users/Zuhayr/Downloads/776 F SP.fcs", channels = c(1, 3, 5:14, 18, 21))
-downsampling_instance$spade_downsample()
-downsampling_instance$spade_build_tree()
+# downsampling_instance <- downsampling(file = "C:/Users/Zuhayr/Downloads/776 F SP.fcs", channels = c(1, 3, 5:14, 18, 21))
+# downsampling_instance$spade_downsample()
+# downsampling_instance$spade_build_tree()
 
 
 

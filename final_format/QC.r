@@ -62,7 +62,7 @@ quality_control <- setRefClass("quality_control", fields = list(file = "characte
                            #then transform
                            #file <- flowCore::transform(file, flowCore::estimateLogicle(file, colnames(flowCore::keyword(file)$SPILL))) #################################################
                            #file <- flowCore::transform(file, flowCore::estimateLinear(file, colnames(flowCore::keyword(file)$SPILL))) #################################################
-                           file <- ""
+                           #file <- ""
 
                         # Read files
                         # fs <- flowCore::read.FCS(file)

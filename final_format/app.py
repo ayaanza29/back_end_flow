@@ -1,6 +1,18 @@
+# try:
+#     from collections.abc import Callable  # noqa
+# except ImportError:
+#     from collections import Callable  # noqa
 
 
+# import collections
+# try:
+#     collectionsAbc = collections.abc
+# except AttributeError:
+#     collectionsAbc = collections
 
+
+#from six.moves import collections.abc
+#from collections import abc
 from tokenize import String
 from bokeh.plotting import *
 from bokeh.models import *
@@ -13,18 +25,19 @@ import FlowCal
 import matplotlib.pyplot as plt
 import holoviews
 #from ggplot import *
-from scipy import stats
+from scipy import stats 
 import numpy as np
 import datetime
 import pandas as pd
 import datashader as ds
 import datashader.transfer_functions as tf
-from collections.abc import OrderedDict as odict
+#from collections.abc import OrderedDict as odict
 import holoviews as hv
 
 from holoviews import opts
 from holoviews.operation.datashader import rasterize
 from holoviews.operation import decimate
+
 
 
 begin_time = datetime.datetime.now()
@@ -42,9 +55,9 @@ z = np.column_stack((x1, y1))
 print(type(z))
 
 points = hv.Points(z)
-rasterize(points)
+#collections.abc.rasterize(points)
 
-
+#datashade(      points,      cmap="kbc_r", cnorm="linear").relabel("datashade()")
 
 # s1 = ColumnDataSource(data=dict(x1=x1, y1=y1))
 # p1 = figure(width=400, height=400, tools="lasso_select, box_select, poly_select, pan, wheel_zoom, box_zoom, reset", title="Select Here")
