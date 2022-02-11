@@ -31,14 +31,18 @@ import datetime
 import pandas as pd
 import datashader as ds
 import datashader.transfer_functions as tf
+import collections
 #from collections.abc import OrderedDict as odict
 import holoviews as hv
 
 from holoviews import opts
-from holoviews.operation.datashader import rasterize
+import holoviews.operation.datashader
+from holoviews.operation.datashader import rasterize, datashade
 from holoviews.operation import decimate
 
-
+#C:\Users\Zuhayr\Documents\GitHub\r_background_app\venv
+#pip install -r /path/to/requirements.txt
+#--no-cache-dir
 
 begin_time = datetime.datetime.now()
 
@@ -56,14 +60,19 @@ print(type(z))
 
 points = hv.Points(z)
 #collections.abc.rasterize(points)
-
+points = rasterize(points)
 #datashade(      points,      cmap="kbc_r", cnorm="linear").relabel("datashade()")
+#dict(x1=x1, y1=y1)
 
-# s1 = ColumnDataSource(data=dict(x1=x1, y1=y1))
-# p1 = figure(width=400, height=400, tools="lasso_select, box_select, poly_select, pan, wheel_zoom, box_zoom, reset", title="Select Here")
-# p1.xaxis.axis_label = 'FSC-A'
-# p1.yaxis.axis_label = 'FSC-H'
-# p1.circle('x1', 'y1', source=s1, alpha=0.6, color = "color column")
-# #, color = density(x,y)
+# np_array = np.array(points)
+# print(np_array)
+print(points)
+df =  pd.DataFrame(points)
+s1 = ColumnDataSource(data=df)
+p1 = figure(width=400, height=400, tools="lasso_select, box_select, poly_select, pan, wheel_zoom, box_zoom, reset", title="Select Here")
+p1.xaxis.axis_label = 'FSC-A'
+p1.yaxis.axis_label = 'FSC-H'
+p1.circle('x1', 'y1', source=s1, alpha=0.6, color = "color column")
+#, color = density(x,y)
 
-# print(datetime.datetime.now() - begin_time)
+print(datetime.datetime.now() - begin_time)
