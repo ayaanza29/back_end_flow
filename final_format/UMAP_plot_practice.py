@@ -100,7 +100,7 @@ from bokeh.layouts import row
 #from bokeh.plotting import figure, output_file, show
 import FlowCal
 import matplotlib.pyplot as plt
-import holoviews
+import templates.holoviewsApp as holoviewsApp
 #from ggplot import *
 from scipy import stats
 import numpy as np
