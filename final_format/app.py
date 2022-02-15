@@ -83,13 +83,17 @@
 
 # show(layout)
 
+from pickle import TRUE
 import numpy as np
 import holoviews as hv
 #from templates.holoviewsApp import dim, opts
 import FlowCal
 import panel as pn
 import holoviews.operation.datashader as hvds
+from holoviews.operation.datashader import rasterize
 from matplotlib import cm
+import pandas as pd
+import numpy as np
 hv.extension("bokeh")
 
 
@@ -128,8 +132,39 @@ hv.extension("bokeh")
 
 fcsFile_filtered = "C:/Users/Zuhayr/Documents/GitHub/r_background_app/PeacoQC_results/fcs_files/776 F SP_QC.fcs"
 s = FlowCal.io.FCSData(fcsFile_filtered)[:1000]
-points =  hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])
+# points =  hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])
+# points = rasterize(points)
+# points.opts(fill_color='blue', fill_alpha=0.5, size=5, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
+ropts = dict(tools=["hover"], height=380, width=330, colorbar=True, colorbar_position="bottom")
+stuff = hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])
+points = hv.Layout([rasterize(stuff).opts(**ropts).opts(cnorm=n).relabel(n)
+           for n in ["linear", "log", "eq_hist"]])
+#points = rasterize(hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])).opts(fill_color='blue', fill_alpha=0.5, size=5, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
+server = pn.serve(points, start=TRUE, show=TRUE)
+#server = pn.panel(points).show()
 
-points.opts(fill_color='blue', fill_alpha=0.5, size=5, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
 
-server = pn.panel(points).show()
+
+# num=10000
+# np.random.seed(1)
+
+# dists = {cat: pd.DataFrame(dict([('x',np.random.normal(x,s,num)), 
+#                                  ('y',np.random.normal(y,s,num)), 
+#                                  ('val',val), 
+#                                  ('cat',cat)]))      
+#          for x,  y,  s,  val, cat in 
+#          [(  2,  2, 0.03, 10, "d1"), 
+#           (  2, -2, 0.10, 20, "d2"), 
+#           ( -2, -2, 0.50, 30, "d3"), 
+#           ( -2,  2, 1.00, 40, "d4"), 
+#           (  0,  0, 3.00, 50, "d5")] }
+
+# df = pd.concat(dists,ignore_index=True)
+# df["cat"]=df["cat"].astype("category")
+
+# ropts = dict(tools=["hover"], height=380, width=330, colorbar=True, colorbar_position="bottom")
+
+# points = hv.Layout([rasterize(hv.Points(df)).opts(**ropts).opts(cnorm=n).relabel(n)
+#            for n in ["linear", "log", "eq_hist"]])
+
+# server = pn.panel(points).show()
