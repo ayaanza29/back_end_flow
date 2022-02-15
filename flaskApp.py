@@ -14,12 +14,12 @@ def index():
             # generate a script to load the customized session
             script = server_session(session_id=session.id, url='http://localhost:5006')
             # use the script in the rendered page
-    return render_template("C:/Users/Zuhayr/Documents/GitHub/r_background_app/stuff/templates/embed.html", script=script, template="Flask")
+    return render_template("embed.html", script=script) #template="Flask"
 
 
 if __name__ == '__main__':
     # runs app in debug mode
     app.run(port=5000, debug=True)
 
-#python templates/holoviewsApp.py
+#python templates/holoviewsApp.py  C:\Users\Zuhayr\Documents\GitHub\r_background_app\stuff\templates\embed.html
 #python stuff/flaskApp.py

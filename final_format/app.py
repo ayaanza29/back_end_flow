@@ -84,8 +84,8 @@
 # show(layout)
 
 import numpy as np
-import templates.holoviewsApp as hv
-from templates.holoviewsApp import dim, opts
+import holoviews as hv
+#from templates.holoviewsApp import dim, opts
 import FlowCal
 import panel as pn
 import holoviews.operation.datashader as hvds
@@ -93,33 +93,43 @@ from matplotlib import cm
 hv.extension("bokeh")
 
 
+# fcsFile_filtered = "C:/Users/Zuhayr/Documents/GitHub/r_background_app/PeacoQC_results/fcs_files/776 F SP_QC.fcs"
+# s = FlowCal.io.FCSData(fcsFile_filtered)[:1000]
+
+# # x1 = s[:, ['FSC-A']] 
+# # y1 = s[:, ['FSC-H']]
+
+
+# # z = np.column_stack((x1, y1))
+
+# #point_opts = opts.Points(fill_color='#00AA00', fill_alpha=0.5, line_width=1, line_color='black', size=5)
+
+# points = hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])
+
+# #stuff.opts(fill_color='blue', fill_alpha=0.5, size=5, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
+
+# hvds.dynspread(
+#     hvds.datashade(
+#         points, 
+#         cmap=cm.Reds,
+#     )
+# ).opts(
+#     width=350, 
+#     height=300, 
+#     padding=0.05,
+#     show_grid=True,
+# )
+
+# #server = pn.serve(stuff, start=False, show=False)
+# #server = pn.panel(stuff).show()
+# #server.stop()
+
+
+
 fcsFile_filtered = "C:/Users/Zuhayr/Documents/GitHub/r_background_app/PeacoQC_results/fcs_files/776 F SP_QC.fcs"
 s = FlowCal.io.FCSData(fcsFile_filtered)[:1000]
+points =  hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])
 
-# x1 = s[:, ['FSC-A']] 
-# y1 = s[:, ['FSC-H']]
+points.opts(fill_color='blue', fill_alpha=0.5, size=5, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
 
-
-# z = np.column_stack((x1, y1))
-
-#point_opts = opts.Points(fill_color='#00AA00', fill_alpha=0.5, line_width=1, line_color='black', size=5)
-
-points = hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])
-
-#stuff.opts(fill_color='blue', fill_alpha=0.5, size=5, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
-
-hvds.dynspread(
-    hvds.datashade(
-        points, 
-        cmap=cm.Reds,
-    )
-).opts(
-    width=350, 
-    height=300, 
-    padding=0.05,
-    show_grid=True,
-)
-
-#server = pn.serve(stuff, start=False, show=False)
-#server = pn.panel(stuff).show()
-#server.stop()
+server = pn.panel(points).show()
