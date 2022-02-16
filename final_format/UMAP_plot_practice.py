@@ -95,7 +95,7 @@ from bokeh.plotting import *
 from bokeh.models import *
 from random import random
 
-from bokeh.layouts import row
+from bokeh.layouts import row, column
 #from bokeh.models import ColumnDataSource, CustomJS, Button
 #from bokeh.plotting import figure, output_file, show
 import FlowCal

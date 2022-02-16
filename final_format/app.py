@@ -90,10 +90,12 @@ import holoviews as hv
 import FlowCal
 import panel as pn
 import holoviews.operation.datashader as hvds
-from holoviews.operation.datashader import rasterize
+from holoviews.operation.datashader import datashade, shade, dynspread, spread, rasterize
+from holoviews.operation import decimate
 from matplotlib import cm
 import pandas as pd
 import numpy as np
+from numba import jit
 hv.extension("bokeh")
 
 
@@ -131,15 +133,36 @@ hv.extension("bokeh")
 
 
 fcsFile_filtered = "C:/Users/Zuhayr/Documents/GitHub/r_background_app/PeacoQC_results/fcs_files/776 F SP_QC.fcs"
-s = FlowCal.io.FCSData(fcsFile_filtered)[:1000]
+s = FlowCal.io.FCSData(fcsFile_filtered)[:1000000]
+
+x1 = s[:, ['FSC-A']] 
+y1 = s[:, ['FSC-H']]
+
+#combined = s[:, ['FSC-A', 'FSC-H']]
+#combined = dict(combined)
+combined1 = (np.array(x1)).flatten()
+print(type(combined1))
+print(combined1)
+combined2 = (np.array(y1)).flatten()
+print(type(combined2))
+#print(.analysis)
+#combined = {'x': combined1, 'y': combined2}
+
+
+combined = pd.DataFrame({'FSC-A': combined1, 'FSC-H': combined2})
+combined = combined.to_numpy()
+
+print(combined)
 # points =  hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])
 # points = rasterize(points)
 # points.opts(fill_color='blue', fill_alpha=0.5, size=5, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
 ropts = dict(tools=["hover"], height=380, width=330, colorbar=True, colorbar_position="bottom")
-stuff = hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])
-points = hv.Layout([rasterize(stuff).opts(**ropts).opts(cnorm=n).relabel(n)
-           for n in ["linear", "log", "eq_hist"]])
-#points = rasterize(hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])).opts(fill_color='blue', fill_alpha=0.5, size=5, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
+points = hv.Points(data=combined, kdims=['FSC-A', 'FSC-H']).opts(fill_color='blue', fill_alpha=0.5, size=1, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
+# points = hv.Layout([rasterize(stuff).opts(**ropts).opts(cnorm=n).relabel(n)
+#            for n in ["linear", "log", "eq_hist"]])
+# points = rasterize(hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])).opts(fill_color='blue', fill_alpha=0.5, size=5, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
+#points = rasterize(points)
+#points = rasterize(stuff)
 server = pn.serve(points, start=TRUE, show=TRUE)
 #server = pn.panel(points).show()
 
@@ -161,7 +184,7 @@ server = pn.serve(points, start=TRUE, show=TRUE)
 
 # df = pd.concat(dists,ignore_index=True)
 # df["cat"]=df["cat"].astype("category")
-
+# print(df)
 # ropts = dict(tools=["hover"], height=380, width=330, colorbar=True, colorbar_position="bottom")
 
 # points = hv.Layout([rasterize(hv.Points(df)).opts(**ropts).opts(cnorm=n).relabel(n)
