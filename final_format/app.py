@@ -97,7 +97,7 @@ import pandas as pd
 import numpy as np
 from numba import jit
 hv.extension("bokeh")
-
+from scipy.stats import gaussian_kde
 
 # fcsFile_filtered = "C:/Users/Zuhayr/Documents/GitHub/r_background_app/PeacoQC_results/fcs_files/776 F SP_QC.fcs"
 # s = FlowCal.io.FCSData(fcsFile_filtered)[:1000]
@@ -133,7 +133,7 @@ hv.extension("bokeh")
 
 
 fcsFile_filtered = "C:/Users/Zuhayr/Documents/GitHub/r_background_app/PeacoQC_results/fcs_files/776 F SP_QC.fcs"
-s = FlowCal.io.FCSData(fcsFile_filtered)[:1000000]
+s = FlowCal.io.FCSData(fcsFile_filtered)[:10000]
 
 x1 = s[:, ['FSC-A']] 
 y1 = s[:, ['FSC-H']]
@@ -156,14 +156,31 @@ print(combined)
 # points =  hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])
 # points = rasterize(points)
 # points.opts(fill_color='blue', fill_alpha=0.5, size=5, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
+
 ropts = dict(tools=["hover"], height=380, width=330, colorbar=True, colorbar_position="bottom")
-points = hv.Points(data=combined, kdims=['FSC-A', 'FSC-H']).opts(fill_color='blue', fill_alpha=0.5, size=1, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
+
+points = hv.Points(data=combined, kdims=['FSC-A', 'FSC-H']).opts(fill_color='blue', nonselection_color = "gray", fill_alpha=0.5, size=1, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
+#points = hv.Bivariate(data=combined, kdims=['FSC-A', 'FSC-H']).opts(cmap='Blues', colorbar=True, filled=True, toolbar='above', width=350)
 # points = hv.Layout([rasterize(stuff).opts(**ropts).opts(cnorm=n).relabel(n)
 #            for n in ["linear", "log", "eq_hist"]])
 # points = rasterize(hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])).opts(fill_color='blue', fill_alpha=0.5, size=5, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
 #points = rasterize(points)
 #points = rasterize(stuff)
-server = pn.serve(points, start=TRUE, show=TRUE)
+
+# def update(attr ,old, new):
+#     source.data = new
+selection = hv.streams.Selection1D(source=points)
+def selected_info(index):
+    arr = points.array()[index]
+    if index:
+        label = 'Mean x, y: %.3f, %.3f' % tuple(arr.mean(axis=0))
+    else:
+        label = 'No selection'
+    return points.clone(arr, label=label).opts(color='red')
+selected_points = hv.DynamicMap(selected_info, streams=[selection])
+# points.on_change()
+#points = gaussian_kde(points)
+server = pn.serve(points + selected_points, start=TRUE, show=TRUE)
 #server = pn.panel(points).show()
 
 
