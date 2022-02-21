@@ -1,5 +1,5 @@
 #flaskApp.py
-
+from holoviewsApp import *
 from bokeh.client import pull_session
 from bokeh.embed import server_session
 from flask import Flask, render_template
@@ -19,6 +19,15 @@ def index():
 
 @app.route('/page')
 def page():
+    with pull_session(url="http://localhost:5006/") as session:
+            # generate a script to load the customized session
+            script = server_session(session_id=session.id, url='http://localhost:5006')
+            # use the script in the rendered page
+    return render_template("page.html", script=script) #template="Flask"
+
+@app.route('/graph2')
+def graph2():
+    change()
     with pull_session(url="http://localhost:5006/") as session:
             # generate a script to load the customized session
             script = server_session(session_id=session.id, url='http://localhost:5006')

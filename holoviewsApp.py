@@ -17,25 +17,14 @@ hv.extension("bokeh")
 from scipy.stats import gaussian_kde
 
 def sine():
-    # fcsFile_filtered = "C:/Users/Zuhayr/Documents/GitHub/r_background_app/PeacoQC_results/fcs_files/776 F SP_QC.fcs"
-    # s = FlowCal.io.FCSData(fcsFile_filtered)[:1000]
-    # ropts = dict(tools=["hover"], height=380, width=330, colorbar=True, colorbar_position="bottom")
-    # return hv.Points(data=s, kdims=['FSC-A', 'FSC-H'])
-        
     fcsFile_filtered = "C:/Users/Zuhayr/Documents/GitHub/r_background_app/PeacoQC_results/fcs_files/776 F SP_QC.fcs"
     s = FlowCal.io.FCSData(fcsFile_filtered)[:10000]
-
     x1 = s[:, ['FSC-A']] 
     y1 = s[:, ['FSC-H']]
-
     combined1 = (np.array(x1)).flatten()
     combined2 = (np.array(y1)).flatten()
-
-
     combined = pd.DataFrame({'FSC-A': combined1, 'FSC-H': combined2})
     combined = combined.to_numpy()
-
-    print(combined)
     ropts = dict(tools=["hover"], height=380, width=330, colorbar=True, colorbar_position="bottom")
     points = hv.Points(data=combined, kdims=['FSC-A', 'FSC-H']).opts(fill_color='blue', nonselection_color = "gray", fill_alpha=0.5, size=1, frame_width=500, frame_height=500, tools=["lasso_select", "box_select", "poly_select"])
     # selection = hv.streams.Selection1D(source=points)
@@ -52,7 +41,19 @@ def sine():
 
 
 def selected(stuff):
-    print(stuff)
+    selection = hv.streams.Selection1D(source=stuff)
+    def selected_info(index):
+        arr = points.array()[index]
+        if index:
+            label = 'Mean x, y: %.3f, %.3f' % tuple(arr.mean(axis=0))
+        else:
+            label = 'No selection'
+        return points.clone(arr, label=label).opts(color='red')
+    selected_points = hv.DynamicMap(selected_info, streams=[selection])
+    return selected_points
+
+def change():
+    
 
 if __name__ == '__main__':
     # dmap = hvds.dynspread(
@@ -76,6 +77,9 @@ if __name__ == '__main__':
     # stuff = sine()
     # points = hv.Layout([rasterize(stuff).opts(**ropts).opts(cnorm=n).relabel(n)
     #         for n in ["linear", "log", "eq_hist"]])
+
+
+
 
 
     pn.serve(points, port=5006, allow_websocket_origin=["localhost:5000"], show=False)
