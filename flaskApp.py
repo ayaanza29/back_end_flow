@@ -27,7 +27,18 @@ def page():
 
 @app.route('/graph2')
 def graph2():
-    change()
+    f = open("count_graph.txt", "r")
+    count = int(f.read())
+    f.close()
+    if count == 0:
+        count = 1
+    else:
+        count = 0
+    print("why")
+    # Overwrite the count
+    f = open("count_graph.txt", "w")
+    f.write(str(count))
+    f.close()
     with pull_session(url="http://localhost:5006/") as session:
             # generate a script to load the customized session
             script = server_session(session_id=session.id, url='http://localhost:5006')

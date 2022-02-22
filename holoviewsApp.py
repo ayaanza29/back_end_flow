@@ -1,5 +1,6 @@
 # holoviews.py
-
+from flask import Flask, flash, request, redirect, url_for, render_template
+from werkzeug.utils import secure_filename
 from pickle import TRUE
 import numpy as np
 import holoviews as hv
@@ -16,7 +17,7 @@ from numba import jit
 hv.extension("bokeh")
 from scipy.stats import gaussian_kde
 
-def sine():
+def first():
     fcsFile_filtered = "C:/Users/Zuhayr/Documents/GitHub/r_background_app/PeacoQC_results/fcs_files/776 F SP_QC.fcs"
     s = FlowCal.io.FCSData(fcsFile_filtered)[:10000]
     x1 = s[:, ['FSC-A']] 
@@ -52,8 +53,13 @@ def selected(stuff):
     selected_points = hv.DynamicMap(selected_info, streams=[selection])
     return selected_points
 
-def change():
-    
+def graph(pos):
+    if pos == 0:
+        stuff = first()
+        return first()
+    elif pos == 1:
+        print("hi")
+        return selected(stuff)
 
 if __name__ == '__main__':
     # dmap = hvds.dynspread(
@@ -67,7 +73,11 @@ if __name__ == '__main__':
     #     padding=0.05,
     #     show_grid=True,
     # )
-    points = sine()
+    print("hello")
+    f = open("count_graph.txt", "r")
+    count = int(f.read())
+    f.close()
+    points = graph(count)
     # points = rasterize(points)
     # ropts = dict(tools=["hover"], height=380, width=330, colorbar=True, colorbar_position="bottom")
 
