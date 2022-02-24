@@ -92,7 +92,8 @@ if __name__ == '__main__':
 
 
 
-    pn.serve(points, port=5006, allow_websocket_origin=["localhost:5000"], show=False)
+    #pn.serve(points, port=5006, allow_websocket_origin=["localhost:5000"], show=False)
+    pn.serve(points, port=5006, websocket_origin="localhost:5000", show=False)
 
 
 
