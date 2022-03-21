@@ -118,7 +118,7 @@ output_file("callback.html")
 
 begin_time = datetime.datetime.now()
 fcsFile_filtered = "C:/Users/Zuhayr/Documents/GitHub/r_background_app/PeacoQC_results/fcs_files/776 F SP_QC.fcs"
-s = FlowCal.io.FCSData(fcsFile_filtered)[:1000]
+s = FlowCal.io.FCSData(fcsFile_filtered)#[:1000]
 
 
 
